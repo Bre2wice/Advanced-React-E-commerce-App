@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCategories, fetchProducts } from "./api/api";
+import { fetchCategories, fetchProducts } from "./api/api"; // ✅ Use API fetch
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "./store/slices/cartSlice";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
+import LoginForm from "./components/LoginForm.jsx";
+import SignupForm from "./components/SignupForm.jsx";
+import OrderHistory from "./components/OrderHistory.jsx";
 import Cart from "./components/Cart.jsx";
 import ProductCard from "./components/ProductCard.jsx";
 import ProductDetail from "./components/ProductDetail.jsx";
@@ -14,23 +17,33 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
+
   const totalItems = useSelector((state) =>
     state.cart.items.reduce((sum, item) => sum + item.quantity, 0)
   );
 
-  // Fetch categories (for filter)
-  const { data: categories = [], isLoading: categoriesLoading, error: categoriesError } = useQuery({
+  // Fetch categories
+  const {
+    data: categories = [],
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
-    staleTime: 1000 * 60 * 60, // 1 hour
+    staleTime: 1000 * 60 * 60,
   });
 
-  // Fetch products (home page only)
-  const { data: products = [], isLoading: productsLoading, error: productsError } = useQuery({
+  // Fetch products from API (with optional category)
+  const {
+    data: products = [],
+    isLoading: productsLoading,
+    error: productsError,
+  } = useQuery({
     queryKey: ["products", selectedCategory],
     queryFn: () => fetchProducts(selectedCategory),
   });
 
+  // Add to cart
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
   };
@@ -40,22 +53,28 @@ export default function App() {
 
   return (
     <>
-      {/* Navbar now outside padded container */}
       <header>
-        <h1>Advanced E-Commerce Store</h1>
-        <button onClick={() => setShowCart(true)}>🛒 Cart {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}</button>
+        <h1>
+          <Link to="/">Advanced E-Commerce Store</Link>
+        </h1>
+        <nav>
+          <Link to="/login">Login</Link> | <Link to="/signup">Sign Up</Link> |{" "}
+          <Link to="/orders">Order History</Link>
+          <button onClick={() => setShowCart(true)}>
+            🛒 Cart{" "}
+            {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+          </button>
+        </nav>
       </header>
 
       <div className="app" style={{ padding: "20px" }}>
         {showCart && <Cart onClose={() => setShowCart(false)} />}
 
         <Routes>
-          {/* Home Route */}
           <Route
             path="/"
             element={
               <div>
-                {/* Category filter only on home page */}
                 <div style={{ margin: "20px 0" }}>
                   <label>
                     Filter by Category:{" "}
@@ -74,26 +93,31 @@ export default function App() {
                 </div>
 
                 <div className="products-grid">
-                  {products.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onAddToCart={handleAddToCart}
-                    />
-                  ))}
+                  {products.length === 0 ? (
+                    <p>No products found.</p>
+                  ) : (
+                    products.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onAddToCart={handleAddToCart}
+                      />
+                    ))
+                  )}
                 </div>
               </div>
             }
           />
 
-          {/* Product Detail Route */}
           <Route
             path="/product/:id"
             element={<ProductDetail onAddToCart={handleAddToCart} />}
           />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/orders" element={<OrderHistory />} />
         </Routes>
       </div>
     </>
   );
 }
-

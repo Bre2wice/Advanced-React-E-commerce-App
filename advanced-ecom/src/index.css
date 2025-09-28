@@ -42,19 +42,42 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Logo / Title */
 header h1 {
   margin: 0;
   font-size: 1.5rem;
-  margin-left: 20px; /* shift slightly right */
+  color: #f59e0b; /* gold */
 }
 
+header h1 a {
+  text-decoration: none;
+  color: #f59e0b;
+}
+
+/* Navbar Links */
+header nav a {
+  color: #f59e0b; /* gold */
+  text-decoration: none;
+  font-weight: 500;
+  margin-right: 15px;
+  margin-left: 10px;
+  transition: color 0.3s;
+}
+
+header nav a:hover {
+  color: #ffa733; /* lighter gold on hover */
+}
+
+/* Cart Button */
 header button {
-  background-color: #ff8c00;
+  background-color: #f59e0b;
   border-radius: 4px;
   padding: 8px 16px;
   font-weight: bold;
   color: #fff;
-  margin-right: 20px; /* shift slightly left */
+  margin-left: 5px;
+  margin-right: 10px;
+  transition: background 0.3s;
 }
 
 header button:hover {
@@ -102,7 +125,7 @@ select {
   width: 150px;
   height: 150px;
   object-fit: contain;
-  margin: 0 auto 10px auto; /* center image horizontally */
+  margin: 0 auto 10px auto;
   display: block;
 }
 
@@ -119,13 +142,14 @@ select {
   overflow: hidden;
   text-overflow: ellipsis;
 
-  /* Multiline truncation with cross-browser compatibility */
-  display: -webkit-box; /* fallback for WebKit */
+  /* Multiline truncation */
+  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 
-  display: box; /* standard fallback */
+  display: box;
   box-orient: vertical;
+
   line-clamp: 3; /* standard property */
 }
 
@@ -193,6 +217,16 @@ hr {
   margin: 10px 0;
 }
 
+/* === Cart Badge === */
+.cart-badge {
+  background-color: red;
+  color: white;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
 /* === Responsive Adjustments === */
 @media (max-width: 600px) {
   .products-grid {
@@ -210,12 +244,140 @@ hr {
   }
 }
 
-/* === Cart Badge === */
-.cart-badge {
-  background-color: red;
+/* Login container: center horizontally and vertically */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+/* Form styling */
+.login-form {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Headline */
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e90ff;
+}
+
+/* Labels */
+.login-form label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+/* Inputs */
+.login-form input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* Submit button */
+.login-form button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #1e90ff;
   color: white;
-  font-size: 0.8rem;
-  padding: 2px 6px;
-  border-radius: 50%;
-  margin-left: 5px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #0f75d1;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Signup container: center horizontally and vertically */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+/* Form styling */
+.signup-form {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Headline */
+.signup-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e90ff;
+}
+
+/* Labels */
+.signup-form label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+/* Inputs */
+.signup-form input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* Submit button */
+.signup-form button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #1e90ff;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.signup-form button:hover {
+  background-color: #0f75d1;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
 }
